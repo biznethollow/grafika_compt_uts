@@ -1,50 +1,13 @@
 # Randomized Depth First Search (C)
 
 
-# Struktur Maze
+### Struktur Maze
 
 Maze berbentuk grid:
 
 ```
 7 x 7 cell
 ```
-
-Contoh hasil maze:
-
-```
-### ###
-#     #
-# ### #
-# #   #
-# ### #
-#     #
-### ###
-```
-
-Keterangan:
-
-```
-#  = dinding
-   = jalan
-```
-
-Posisi pintu:
-
-```
-   masuk
-     ↓
-### ###
-#     #
-# ### #
-# #   #
-# ### #
-#     #
-### ###
-     ↑
-   keluar
-```
-
----
 
 # Struktur Data
 
