@@ -1,52 +1,40 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include "maze.h"
 
-#define WIDTH 10
-#define HEIGHT 10
-#define CELL_SIZE 10
+void initMaze(Maze *m) {
 
-typedef struct {
-    int x1, x2;
-    int y1, y2;
-    int wall;
-} Cell;
+    for(int y=0; y<HEIGHT; y++) {
+        for(int x=0; x<WIDTH; x++) {
 
-Cell maze[HEIGHT][WIDTH];
+            m->grid[y][x].x1 = x * CELL_SIZE;
+            m->grid[y][x].x2 = m->grid[y][x].x1 + CELL_SIZE;
 
-void initMaze() {
+            m->grid[y][x].y1 = y * CELL_SIZE;
+            m->grid[y][x].y2 = m->grid[y][x].y1 + CELL_SIZE;
 
-    for(int y = 0; y < HEIGHT; y++) {
-        for(int x = 0; x < WIDTH; x++) {
-
-            maze[y][x].x1 = x * CELL_SIZE;
-            maze[y][x].x2 = maze[y][x].x1 + CELL_SIZE;
-
-            maze[y][x].y1 = y * CELL_SIZE;
-            maze[y][x].y2 = maze[y][x].y1 + CELL_SIZE;
-
-            maze[y][x].wall = 0;
+            m->grid[y][x].wall = 0;
         }
     }
 }
 
-void printMaze() {
+void printMaze(Maze *m) {
 
-    for(int y = 0; y < HEIGHT; y++) {
-        for(int x = 0; x < WIDTH; x++) {
+    for(int y=0; y<HEIGHT; y++) {
+        for(int x=0; x<WIDTH; x++) {
 
             printf("(%d,%d,%d,%d) ",
-                maze[y][x].x1,
-                maze[y][x].x2,
-                maze[y][x].y1,
-                maze[y][x].y2
+                m->grid[y][x].x1,
+                m->grid[y][x].x2,
+                m->grid[y][x].y1,
+                m->grid[y][x].y2
             );
         }
         printf("\n\n");
     }
 }
 
-void divide(int x, int y, int w, int h) {
+void divide(Maze *m, int x, int y, int w, int h) {
 
     if(w < 2 || h < 2)
         return;
@@ -58,34 +46,25 @@ void divide(int x, int y, int w, int h) {
         int wy = y + rand() % h;
         int passage = x + rand() % w;
 
-        for(int i = x; i < x+w; i++) {
+        for(int i=x; i<x+w; i++) {
             if(i != passage)
-                maze[wy][i].wall = 1;
+                m->grid[wy][i].wall = 1;
         }
 
-        divide(x, y, w, wy-y);
-        divide(x, wy+1, w, y+h-wy-1);
-
+        divide(m, x, y, w, wy-y);
+        divide(m, x, wy+1, w, y+h-wy-1);
     }
     else {
 
         int wx = x + rand() % w;
         int passage = y + rand() % h;
 
-        for(int i = y; i < y+h; i++) {
+        for(int i=y; i<y+h; i++) {
             if(i != passage)
-                maze[i][wx].wall = 1;
+                m->grid[i][wx].wall = 1;
         }
 
-        divide(x, y, wx-x, h);
-        divide(wx+1, y, x+w-wx-1, h);
+        divide(m, x, y, wx-x, h);
+        divide(m, wx+1, y, x+w-wx-1, h);
     }
-}
-
-int main() {
-    srand(time(NULL));
-    initMaze();
-    divide(0,0,WIDTH,HEIGHT);
-    printMaze();
-    return 0;
 }

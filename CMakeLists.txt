@@ -19,13 +19,15 @@ set(OpenGL_GL_PREFERENCE GLVND)
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
 
-add_executable(main main.cpp)
+add_executable(main 
+    main.cpp
+    src/maze.cpp
+)
 
-foreach(target main)
+target_include_directories(main PRIVATE src)
 
-    target_link_libraries(${target} PRIVATE 
-        OpenGL::GL
-        OpenGL::GLU
-        GLUT::GLUT
-    )
-endforeach()
+target_link_libraries(main PRIVATE 
+    OpenGL::GL
+    OpenGL::GLU
+    GLUT::GLUT
+)
