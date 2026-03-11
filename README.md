@@ -1,5 +1,8 @@
-# Randomized Depth First Search (C)
+# Randomized Depth First Search (C++)
 
+> Read the [Docs](https://github.com/yohanesokta/grafika_compt) to Compile / Builds. WAJIB!
+
+Download this app from release
 
 ### Struktur Maze
 

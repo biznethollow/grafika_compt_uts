@@ -71,37 +71,27 @@ void movement_handler(float dx, float dy) {
 }
 
 
+float speed = 0.2;
+
 void keyboard(unsigned char key, int x, int y)
-{   
-
-    /*
-        ingatan key value:
-        27 = esc
-        99 = c
-        119 = w
-        97 = a
-        115 = s
-        100 = d
-    */
-
-
-    printf("Key pressed: %d\n", key);
+{
     switch (key)
     {
     case 27:
+    case 113:
         exit(0);
         break;
     case 119:
-        movement_handler(0,0.1);
+        movement_handler(0,speed);
         break;
     case 97:
-        movement_handler(-0.1,0);
+        movement_handler(-speed,0);
         break;
     case 115:
-        movement_handler(0,-0.1);
+        movement_handler(0,-speed);
         break;
     case 100:
-        movement_handler(0.1,0);
+        movement_handler(speed,0);
         break;
     case 99:
         reInitMaze();
@@ -123,7 +113,7 @@ int main(int argc, char *argv[])
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowSize(500, 500);
-    glutCreateWindow("Segitiga Titik");
+    glutCreateWindow("Maze Game Yohanes Oktanio");
     reInitMaze();
     glutKeyboardFunc(keyboard);
     myinit();
