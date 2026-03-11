@@ -20,13 +20,13 @@ Maze maze;
     
 struct  movement
 {
-    int x;
-    int y;
+    float x;
+    float y;
 };
 
 void reInitMaze();
 
-movement player {0, 0};
+movement player {0.0, 0.0};
 
 void display()
 {
@@ -49,7 +49,7 @@ void display()
         }
     }
     glColor3f(1.0, 0.0, 0.0);
-    glRecti(player.x * CELL_SIZE, player.y * CELL_SIZE,(player.x + 1) * CELL_SIZE, (player.y + 1) * CELL_SIZE);
+    glRectf(player.x * CELL_SIZE, player.y * CELL_SIZE,(player.x + 1) * CELL_SIZE, (player.y + 1) * CELL_SIZE);
 
     glFlush();
 }
@@ -63,11 +63,19 @@ void myinit()
     glClearColor(1.0, 1.0, 1.0, 1.0);
 }
 
+void movement_handler(float dx, float dy) {
+    player.x += dx;
+    player.y += dy;
+    glutDisplayFunc(display);
+    glutPostRedisplay();
+}
+
+
 void keyboard(unsigned char key, int x, int y)
 {   
 
     /*
-        key saved value:
+        ingatan key value:
         27 = esc
         99 = c
         119 = w
@@ -83,9 +91,19 @@ void keyboard(unsigned char key, int x, int y)
     case 27:
         exit(0);
         break;
-   
+    case 119:
+        movement_handler(0,0.1);
+        break;
+    case 97:
+        movement_handler(-0.1,0);
+        break;
+    case 115:
+        movement_handler(0,-0.1);
+        break;
+    case 100:
+        movement_handler(0.1,0);
+        break;
     case 99:
-        printf("Reinitializing maze...\n");
         reInitMaze();
         break;
     }
